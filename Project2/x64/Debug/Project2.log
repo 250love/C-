@@ -1,0 +1,4 @@
+﻿  源.cpp
+C:\Users\汤\Desktop\Project2\源.cpp(417,23): warning C4244: “初始化”: 从“__int64”转换到“int”，可能丢失数据
+C:\Users\汤\Desktop\Project2\源.cpp(587,45): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+  Project2.vcxproj -> C:\Users\汤\Desktop\Project2\x64\Debug\Project2.exe

@@ -1,0 +1,79 @@
+Program->Struct Funcs
+Funcs->FuncsHead { CodeBody } Funcs
+FuncsHead->Type ID ( FormalParameters )
+Funcs->$
+FormalParameters->Type ID FormalParametersFollow
+FormalParameters->$
+FormalParametersFollow->, Type ID FormalParametersFollow
+FormalParametersFollow->$
+Type->int
+Type->void
+Type->float
+Type->char
+Type->st
+CodeBody->$
+CodeBody->LocalDefineList CodeList
+LocalDefineList->LocalVarDefine LocalDefineList
+LocalDefineList->$
+LocalVarDefine->Type ID ;
+CodeList->Code CodeList
+CodeList->$
+Code->NormalStatement
+Code->PrefixStatement
+Code->IfStatement
+Code->LoopStatement
+Code->break ;
+Code->continue ;
+Code->return Operation ;
+Code->FuncCall
+PrefixStatement->++ ID ;
+PrefixStatement->-- ID ;
+NormalStatement->ID NormalStatementFollow
+NormalStatementFollow->= Operation ;
+NormalStatementFollow->+= Operation ;
+NormalStatementFollow->-= Operation ;
+NormalStatementFollow->*= Operation ;
+NormalStatementFollow->/= Operation ;
+NormalStatementFollow->++ ;
+NormalStatementFollow->-- ;
+Operation->T A
+A->M T A
+A->$
+T->F B
+B->N F B
+B->$
+F->ID
+F->NUM
+F->( Operation )
+F->++ ID
+F->-- ID
+M->+
+M->-
+N->*
+N->/
+IfStatement->if ( JudgeStatement ) { CodeBody } IFStatementFollow
+IFStatementFollow->$
+IFStatementFollow->ElseIFPart ElsePart
+ElsePart->$
+ElsePart->else { CodeBody }
+ElseIFPart->elif ( JudgeStatement ) { CodeBody } ElseIFPart
+ElseIFPart->$
+JudgeStatement->Operation JudgeStatementFollow
+JudgeStatementFollow->CompareSymbol Operation
+JudgeStatementFollow->$
+CompareSymbol->==
+CompareSymbol-><=
+CompareSymbol->>=
+CompareSymbol-><
+CompareSymbol->>
+CompareSymbol->!=
+LoopStatement->while ( JudgeStatement ) { CodeBody }
+FuncCall->CALL ID FuncCallFollow ;
+FuncCallFollow->= ID ( Args )
+FuncCallFollow->( Args )
+Args->F ArgsFollow
+Args->$
+ArgsFollow->, F ArgsFollow
+ArgsFollow->$
+Struct->struct st { LocalDefineList } ; Struct
+Struct->$
