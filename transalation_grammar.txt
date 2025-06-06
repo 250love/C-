@@ -1,0 +1,79 @@
+Program->Struct Funcs
+Funcs->FuncsHead { CodeBody } Funcs
+FuncsHead->Type ID @PUSH_ID @SAVE_FUN @GEQ_G ( FormalParameters )
+Funcs->$
+FormalParameters->Type ID FormalParametersFollow
+FormalParameters->$
+FormalParametersFollow->, Type ID FormalParametersFollow
+FormalParametersFollow->$
+Type->int
+Type->void
+Type->float
+Type->char
+Type->st
+CodeBody->$
+CodeBody->LocalDefineList CodeList
+LocalDefineList->LocalVarDefine LocalDefineList
+LocalDefineList->$
+LocalVarDefine->Type ID ;
+CodeList->Code CodeList
+CodeList->$
+Code->NormalStatement
+Code->PrefixStatement
+Code->IfStatement
+Code->LoopStatement
+Code->break @GEQ_break ;
+Code->continue @GEQ_continue ;
+Code->return @SAVE_return Operation @GEQ_G ;
+Code->FuncCall
+PrefixStatement->++ @SAVE_++ ID @PUSH_ID @GEQ_G ;
+PrefixStatement->-- @SAVE_-- ID @PUSH_ID @GEQ_G ;
+NormalStatement->ID @PUSH_ID NormalStatementFollow
+NormalStatementFollow->= @SAVE_= Operation @GEQ_G ;
+NormalStatementFollow->+= @SAVE_+= Operation @GEQ_G ;
+NormalStatementFollow->-= @SAVE_-= Operation @GEQ_G ;
+NormalStatementFollow->*= @SAVE_*= Operation @GEQ_G ;
+NormalStatementFollow->/= @SAVE_/= Operation @GEQ_G ;
+NormalStatementFollow->++ @SAVE_p++ @GEQ_G ;
+NormalStatementFollow->-- @SAVE_p-- @GEQ_G ;
+Operation->T A
+A->M T @GEQ_G A
+A->$
+T->F B
+B->N F @GEQ_G B
+B->$
+F->ID @PUSH_ID
+F->NUM @PUSH_NUM
+F->( Operation )
+F->++ @SAVE_++ ID @PUSH_ID @GEQ_G
+F->-- @SAVE_-- ID @PUSH_ID @GEQ_G
+M->+ @SAVE_+
+M->- @SAVE_-
+N->* @SAVE_*
+N->/ @SAVE_/
+IfStatement->if @SAVE_if ( JudgeStatement ) @GEQ_G { CodeBody } @GEQ_el IFStatementFollow @GEQ_ie
+IFStatementFollow->$
+IFStatementFollow->ElseIFPart ElsePart
+ElsePart->$
+ElsePart->else { CodeBody }
+ElseIFPart->elif @SAVE_elif ( JudgeStatement ) @GEQ_G { CodeBody } @GEQ_el ElseIFPart
+ElseIFPart->$
+JudgeStatement->Operation JudgeStatementFollow
+JudgeStatementFollow->CompareSymbol Operation @GEQ_G
+JudgeStatementFollow->$
+CompareSymbol->== @SAVE_==
+CompareSymbol-><= @SAVE_<=
+CompareSymbol->>= @SAVE_>=
+CompareSymbol->< @SAVE_<
+CompareSymbol->> @SAVE_>
+CompareSymbol->!= @SAVE_!=
+LoopStatement->while @GEQ_wh @SAVE_do ( JudgeStatement ) @GEQ_G { CodeBody } @GEQ_we
+FuncCall->CALL ID @PUSH_ID FuncCallFollow ;
+FuncCallFollow->= ID @PUSH_ID ( Args ) @SAVE_callr @GEQ_c1
+FuncCallFollow->( Args ) @SAVE_call @GEQ_c2
+Args->F @SAVE_push @GEQ_G ArgsFollow
+Args->$
+ArgsFollow->, F @SAVE_push @GEQ_G ArgsFollow
+ArgsFollow->$
+Struct->struct st { LocalDefineList } ; Struct
+Struct->$
